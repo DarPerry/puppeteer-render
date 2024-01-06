@@ -54,7 +54,9 @@ const scrapeLogic = async (sport) => {
         // await page.click(searchResultSelector);
 
         // Locate the full title with a unique string
-        await page.waitForSelector(DK_SELECTORS.AWARDS_PAGE_TAB);
+        await page.waitForSelector(DK_SELECTORS.AWARDS_PAGE_TAB, {
+            timeout: 0,
+        });
         await page.click(DK_SELECTORS.AWARDS_PAGE_TAB);
 
         const tabs = await getAllElements(awardTabSelector);
