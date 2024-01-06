@@ -62,7 +62,7 @@ const scrapeLogic = async (sport) => {
             const tabLabel = (await getTextContent(tab)).toUpperCase();
 
             if (!DK_AWARDS_TABS_TO_EXCLUDE.includes(tabLabel)) {
-                console.log("tabLabel", tabLabel);
+                console.log(sport, "tabLabel", tabLabel);
             }
         }
 
