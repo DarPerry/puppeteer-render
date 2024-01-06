@@ -38,7 +38,8 @@ const scrapeLogic = async (sport) => {
         const getAllElements = async (selector) => await page.$$(selector);
 
         await page.goto(
-            `https://sportsbook.draftkings.com/leagues/${SPORT_LABEL_MAP[sport]}/${sport}?category=awards`
+            `https://sportsbook.draftkings.com/leagues/${SPORT_LABEL_MAP[sport]}/${sport}?category=awards`,
+            { waitUntil: "load", timeout: 0 }
         );
 
         // Set screen size
