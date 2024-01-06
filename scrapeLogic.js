@@ -57,7 +57,9 @@ const scrapeLogic = async (sport) => {
         await page.waitForSelector(DK_SELECTORS.AWARDS_PAGE_TAB, {
             timeout: 0,
         });
-        console.log(await getAllElements(DK_SELECTORS.AWARDS_PAGE_TAB));
+        await new Promise((r) => setTimeout(r, 10000));
+        await page.click(DK_SELECTORS.AWARDS_PAGE_TAB);
+        await new Promise((r) => setTimeout(r, 10000));
         await page.click(DK_SELECTORS.AWARDS_PAGE_TAB);
 
         const tabs = await getAllElements(awardTabSelector);
