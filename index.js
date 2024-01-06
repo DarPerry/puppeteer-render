@@ -5,5 +5,6 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 (async () => {
-    await Promise.all(["nfl", "nba"].map(scrapeLogic));
+    const x = await Promise.all(["nfl", "nba"].map(scrapeLogic));
+    console.log(x);
 })();

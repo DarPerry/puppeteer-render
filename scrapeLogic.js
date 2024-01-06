@@ -11,6 +11,17 @@ const {
 const getTextContent = async (el) =>
     await el.evaluate(({ textContent }) => textContent);
 
+const setPageTimeout = (timeout = 1500) =>
+    new Promise((r) => setTimeout(r, timeout));
+
+const waitForText = async (cell, selector) => {
+    const element = await cell.waitForSelector(selector, {
+        timeout: 60000,
+    });
+
+    return await getTextContent(element);
+};
+
 const scrapeLogic = async (sport) => {
     const browser = await puppeteer.launch({
         headless: true,
@@ -31,6 +42,8 @@ const scrapeLogic = async (sport) => {
         nfl: "football",
     };
 
+    const results = [];
+
     try {
         const page = await browser.newPage();
         const awardTabSelector = `${DK_SELECTORS.ACTIVE_PAGE} ${DK_SELECTORS.AWARD_TABS}`;
@@ -44,6 +57,7 @@ const scrapeLogic = async (sport) => {
 
         // Set screen size
         await page.setViewport({ width: 1080, height: 1024 });
+        const oddsCellSelectors = `${DK_SELECTORS.ACTIVE_PAGE} ${DK_SELECTORS.ODDS_CELL}`;
 
         // Type into search box
         // await page.type(".search-box__input", "automate beyond recorder");
@@ -68,7 +82,35 @@ const scrapeLogic = async (sport) => {
 
             if (!DK_AWARDS_TABS_TO_EXCLUDE.includes(tabLabel)) {
                 console.log(sport, "tabLabel", tabLabel);
+                let rank = 1;
+                console.log("tabLabel", tabLabel);
+
+                await tab.click();
+                await setPageTimeout();
+
+                const oddsCells = await getAllElements(oddsCellSelectors);
+                console.log("oddsCells.length", oddsCells.length);
+
+                if (!oddsCells.length)
+                    console.log("No results found for", tabLabel);
+
+                for (const cell of oddsCells) {
+                    if (rank > MAX_PLAYERS_PER_AWARD) break;
+
+                    const odds = await waitForText(cell, DK_SELECTORS.ODDS);
+                    const player = await waitForText(cell, DK_SELECTORS.NAME);
+
+                    results.push({
+                        playerName: player,
+                        awardName: tabLabel,
+                        currentAwardRank: rank++,
+                        currentAwardOdds: Number(odds.replace("−", "-")),
+                    });
+                }
+
+                console.log(`Finished Scraping ${sport.toUpperCase()} Odds...`);
             }
+            return { sport, results };
         }
 
         // Print the full title
