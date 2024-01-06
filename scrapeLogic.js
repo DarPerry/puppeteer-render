@@ -38,7 +38,7 @@ const scrapeLogic = async (sport) => {
         const getAllElements = async (selector) => await page.$$(selector);
 
         await page.goto(
-            `https://sportsbook.draftkings.com/leagues/${SPORT_LABEL_MAP[sport]}/${sport}?category=awards`,
+            `https://sportsbook.draftkings.com/leagues/${SPORT_LABEL_MAP[sport]}/${sport}`,
             { waitUntil: "load", timeout: 0 }
         );
 
@@ -57,6 +57,7 @@ const scrapeLogic = async (sport) => {
         await page.waitForSelector(DK_SELECTORS.AWARDS_PAGE_TAB, {
             timeout: 0,
         });
+        console.log(await getAllElements(DK_SELECTORS.AWARDS_PAGE_TAB));
         await page.click(DK_SELECTORS.AWARDS_PAGE_TAB);
 
         const tabs = await getAllElements(awardTabSelector);
