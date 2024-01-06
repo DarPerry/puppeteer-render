@@ -11,7 +11,7 @@ const {
 const getTextContent = async (el) =>
     await el.evaluate(({ textContent }) => textContent);
 
-const setPageTimeout = (timeout = 1500) =>
+const setPageTimeout = (timeout = 3500) =>
     new Promise((r) => setTimeout(r, timeout));
 
 const waitForText = async (cell, selector) => {
@@ -110,8 +110,9 @@ const scrapeLogic = async (sport) => {
 
                 console.log(`Finished Scraping ${sport.toUpperCase()} Odds...`);
             }
-            return { sport, results };
         }
+
+        return { sport, results };
 
         // Print the full title
         // console.log(logStatement);
