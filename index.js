@@ -25,7 +25,7 @@ const puppeteer = require("puppeteer");
     const formattedResults = formatScrapedOddsData(scrapedAwardOdds, teamMap);
 
     const results = {
-        fetchedAt: dayjs().format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
+        fetchedAt: dayjs().toISOString(),
         results: formattedResults,
     };
 

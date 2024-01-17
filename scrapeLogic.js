@@ -23,14 +23,17 @@ const waitForText = async (cell, selector) => {
 };
 
 const scrapeLogic = async (sport) => {
+    const puppeteerArgs = [
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--no-zygote",
+    ];
+    if (process.env.NODE_ENV === "production")
+        puppeteerArgs.push("--single-process");
+
     const browser = await puppeteer.launch({
         headless: true,
-        args: [
-            "--disable-setuid-sandbox",
-            "--no-sandbox",
-            "--single-process",
-            "--no-zygote",
-        ],
+        args: puppeteerArgs,
         executablePath:
             process.env.NODE_ENV === "production"
                 ? process.env.PUPPETEER_EXECUTABLE_PATH
