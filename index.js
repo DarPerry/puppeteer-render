@@ -1,4 +1,6 @@
 const dayjs = require("dayjs");
+require("dotenv").config();
+
 const {
     scrapeDraftKingsAwardsOddsForSport,
     scrapeLogic,
@@ -10,6 +12,7 @@ const { insertFetchedResults } = require("./services/database");
 const puppeteer = require("puppeteer");
 
 (async () => {
+    console.log("process.env.NODE_ENV", process.env.NODE_ENV);
     const isProduction = process.env.NODE_ENV === "production";
     const args = ["--disable-setuid-sandbox", "--no-sandbox", "--no-zygote"];
     const headless = isProduction ? "new" : false;
