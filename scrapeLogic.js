@@ -68,6 +68,14 @@ const scrapeLogic = async (sport) => {
         // await page.click(searchResultSelector);
 
         // Locate the full title with a unique string
+
+        const awardsTab = await page.$(DK_SELECTORS.AWARDS_PAGE_TAB);
+
+        if (!awardsTab) {
+            console.log("No Awards Tab Found For", sport.toUpperCase());
+            return { sport, results };
+        }
+
         await page.waitForSelector(DK_SELECTORS.AWARDS_PAGE_TAB, {
             timeout: 0,
         });
