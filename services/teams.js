@@ -88,6 +88,7 @@ const getTeamFallback = (name) => {
         "Ivan Pace": "MIN",
         "CeeDee Lamb": "DAL",
         "Josh Allen": "BUF",
+        "Lamar Jackson": "BAL",
     };
 
     return teamFallbacks[name] || null;

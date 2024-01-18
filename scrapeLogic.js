@@ -31,7 +31,6 @@ const scrapeLogic = async (sport) => {
         "--no-sandbox",
         "--no-zygote",
     ];
-    console.log(isProduction);
     if (isProduction) puppeteerArgs.push("--single-process");
 
     const browser = await puppeteer.launch({
@@ -81,12 +80,11 @@ const scrapeLogic = async (sport) => {
             return { sport, results };
         }
 
-        await page.waitForSelector(DK_SELECTORS.AWARDS_PAGE_TAB, {
-            timeout: 0,
-        });
+        await page.waitForSelector(DK_SELECTORS.AWARDS_PAGE_TAB);
         await new Promise((r) => setTimeout(r, 10000));
         await page.click(DK_SELECTORS.AWARDS_PAGE_TAB);
         await new Promise((r) => setTimeout(r, 10000));
+        await page.click(DK_SELECTORS.AWARDS_PAGE_TAB);
         await page.click(DK_SELECTORS.AWARDS_PAGE_TAB);
 
         const tabs = await getAllElements(awardTabSelector);
@@ -94,15 +92,15 @@ const scrapeLogic = async (sport) => {
             const tabLabel = (await getTextContent(tab)).toUpperCase();
 
             if (!DK_AWARDS_TABS_TO_EXCLUDE.includes(tabLabel)) {
-                console.log(sport, "tabLabel", tabLabel);
+                console.log(
+                    `${sport.toUpperCase()} - Parsing ${tabLabel} Odds...`
+                );
                 let rank = 1;
-                console.log("tabLabel", tabLabel);
 
                 await tab.click();
                 await setPageTimeout();
 
                 const oddsCells = await getAllElements(oddsCellSelectors);
-                console.log("oddsCells.length", oddsCells.length);
 
                 if (!oddsCells.length)
                     console.log("No results found for", tabLabel);
@@ -120,10 +118,14 @@ const scrapeLogic = async (sport) => {
                         currentAwardOdds: Number(odds.replace("−", "-")),
                     });
                 }
-
-                console.log(`Finished Scraping ${sport.toUpperCase()} Odds...`);
             }
         }
+
+        console.log(
+            `${sport.toUpperCase()} - Odds Scraping Complete. ${
+                results.length
+            } Odds Parsed...`
+        );
 
         return { sport, results };
 

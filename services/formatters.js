@@ -2,7 +2,6 @@ import _ from "lodash";
 import { getTeamForPlayer } from "./teams.js";
 
 const formatScrapedOddsData = (scrapedResults, teamMap) => {
-    console.log("Results: ", scrapedResults?.length);
     const finalResults = Object.values(scrapedResults).reduce(
         (acc, { results, sport }) => {
             results.forEach(

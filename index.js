@@ -27,6 +27,4 @@ dotenv.config();
     console.log("Odds Scraping Complete...");
 
     const dbResults = await insertFetchedResults(results);
-
-    console.log("Database Results: ", dbResults);
 })();
