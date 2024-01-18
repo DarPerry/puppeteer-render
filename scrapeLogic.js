@@ -1,12 +1,13 @@
-const puppeteer = require("puppeteer");
-require("dotenv").config();
-const {
+import dotenv from "dotenv";
+import puppeteer from "puppeteer";
+
+import {
     MAX_PLAYERS_PER_AWARD,
-    DK_SB_DOMAIN,
     DK_AWARDS_TABS_TO_EXCLUDE,
-    SPORT_LABEL_MAP,
     DK_SELECTORS,
-} = require("./config");
+} from "./config.js";
+
+dotenv.config();
 
 const getTextContent = async (el) =>
     await el.evaluate(({ textContent }) => textContent);
@@ -22,22 +23,23 @@ const waitForText = async (cell, selector) => {
     return await getTextContent(element);
 };
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const scrapeLogic = async (sport) => {
     const puppeteerArgs = [
         "--disable-setuid-sandbox",
         "--no-sandbox",
         "--no-zygote",
     ];
-    if (process.env.NODE_ENV === "production")
-        puppeteerArgs.push("--single-process");
+    console.log(isProduction);
+    if (isProduction) puppeteerArgs.push("--single-process");
 
     const browser = await puppeteer.launch({
         headless: true,
         args: puppeteerArgs,
-        executablePath:
-            process.env.NODE_ENV === "production"
-                ? process.env.PUPPETEER_EXECUTABLE_PATH
-                : puppeteer.executablePath(),
+        executablePath: isProduction
+            ? process.env.PUPPETEER_EXECUTABLE_PATH
+            : puppeteer.executablePath(),
     });
 
     const SPORT_LABEL_MAP = {
@@ -135,4 +137,4 @@ const scrapeLogic = async (sport) => {
     }
 };
 
-module.exports = { scrapeLogic };
+export { scrapeLogic };

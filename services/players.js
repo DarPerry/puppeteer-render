@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from "axios";
 
 const getActivePlayers = async (sport) => {
     const url =
@@ -10,4 +10,4 @@ const getActivePlayers = async (sport) => {
     return data;
 };
 
-module.exports = { getActivePlayers };
+export { getActivePlayers };

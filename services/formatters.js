@@ -1,5 +1,5 @@
-const _ = require("lodash");
-const { getTeamForPlayer } = require("./teams");
+import _ from "lodash";
+import { getTeamForPlayer } from "./teams.js";
 
 const formatScrapedOddsData = (scrapedResults, teamMap) => {
     console.log("Results: ", scrapedResults?.length);
@@ -49,4 +49,4 @@ const formatScrapedOddsData = (scrapedResults, teamMap) => {
     return finalResults;
 };
 
-module.exports = { formatScrapedOddsData };
+export { formatScrapedOddsData };

@@ -24,7 +24,7 @@ const SPORT_LABEL_MAP = {
 
 const SUPPORTED_SPORTS = Object.keys(SPORT_LABEL_MAP);
 
-module.exports = {
+export {
     BASKETBALL_POSITIONS,
     DK_AWARDS_TABS_TO_EXCLUDE,
     DK_SB_DOMAIN,

@@ -1,23 +1,15 @@
-const dayjs = require("dayjs");
-require("dotenv").config();
+import dayjs from "dayjs";
+import dotenv from "dotenv";
 
-const {
-    scrapeDraftKingsAwardsOddsForSport,
-    scrapeLogic,
-} = require("./scrapeLogic");
-const { getTeamMapBySport } = require("./services/teams");
-const { formatScrapedOddsData } = require("./services/formatters");
-const { SUPPORTED_SPORTS } = require("./config");
-const { insertFetchedResults } = require("./services/database");
-const puppeteer = require("puppeteer");
+import { SUPPORTED_SPORTS } from "./config.js";
+import { scrapeLogic } from "./scrapeLogic.js";
+import { getTeamMapBySport } from "./services/teams.js";
+import { insertFetchedResults } from "./services/database.js";
+import { formatScrapedOddsData } from "./services/formatters.js";
+
+dotenv.config();
 
 (async () => {
-    console.log("process.env.NODE_ENV", process.env.NODE_ENV);
-    const isProduction = process.env.NODE_ENV === "production";
-    const args = ["--disable-setuid-sandbox", "--no-sandbox", "--no-zygote"];
-    const headless = isProduction ? "new" : false;
-    if (isProduction) args.push("--single-process");
-
     console.log("Starting Odds Scraping...");
     const teamMap = await getTeamMapBySport();
     const scrapedAwardOdds = await Promise.all(

@@ -1,6 +1,8 @@
-const { SUPPORTED_SPORTS, BASKETBALL_POSITIONS } = require("../config");
-const { getActivePlayers } = require("./players");
-const _ = require("lodash");
+import _ from "lodash";
+// import { getTeamForPlayer } from "./teams";
+
+import { SUPPORTED_SPORTS, BASKETBALL_POSITIONS } from "../config.js";
+import { getActivePlayers } from "./players.js";
 
 const getTeamMapBySport = async (sport) => {
     const responses = await Promise.all(SUPPORTED_SPORTS.map(getActivePlayers));
@@ -91,4 +93,4 @@ const getTeamFallback = (name) => {
     return teamFallbacks[name] || null;
 };
 
-module.exports = { getTeamForPlayer, getTeamMapBySport };
+export { getTeamForPlayer, getTeamMapBySport };

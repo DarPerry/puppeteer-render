@@ -1,5 +1,4 @@
-const { MongoClient } = require("mongodb");
-const { URI } = require("../config");
+import { MongoClient } from "mongodb";
 
 const insertFetchedResults = async (results) => {
     const client = new MongoClient(
@@ -16,4 +15,4 @@ const insertFetchedResults = async (results) => {
     }
 };
 
-module.exports = { insertFetchedResults };
+export { insertFetchedResults };
