@@ -2,7 +2,7 @@ import { MongoClient } from "mongodb";
 
 const insertFetchedResults = async (results) => {
     const client = new MongoClient(
-        "mongodb+srv://darjperry:B4oTmacTTOUSJbW8@main.efyqolw.mongodb.net/?retryWrites=true&w=majority"
+        "mongodb+srv://darjperry:9ylLaZsttLXvcFNH@main.efyqolw.mongodb.net/?retryWrites=true&w=majority"
     );
 
     try {
